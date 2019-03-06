@@ -3,8 +3,14 @@ const path = require("path");
 
 const filePath = path.join(__dirname, "ziptime.csv");
 
-const src = fs.createReadStream(filePath);
-
-src.on("data", chunk => {
-  console.log(chunk.toString());
+fs.readFile(filePath, (err, contents) => {
+  const lines = contents.toString().split("\r\n");
+  const Obj = lines.map(line => {
+    const split = line.split(",");
+    return {
+      zip: split[0],
+      time: split[1]
+    };
+  });
+  console.log(Obj);
 });
